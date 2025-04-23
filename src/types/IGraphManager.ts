@@ -9,11 +9,16 @@ export type GraphManagerEventMapping<Entity extends IGraphEntityNode<number, Rec
 	edgeRemove: [source: Entity, target: Entity];
 };
 
+/**
+ * Hierarchy structure of a node in the graph.
+ * @since v0.0.2
+ */
 export type GraphStructure = {
 	type: number;
 	id: string;
-	targets?: GraphStructure[];
 	props: Record<string, unknown>;
+	targets?: GraphStructure[];
+	sources?: GraphStructure[];
 };
 
 /**

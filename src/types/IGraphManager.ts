@@ -22,6 +22,16 @@ export type GraphStructure = {
 };
 
 /**
+ * Graph link structure for a node id's in the graph.
+ * @since v0.0.3
+ */
+export type GraphEdgeStructure = {
+	id: number;
+	targets?: GraphEdgeStructure[];
+	sources?: GraphEdgeStructure[];
+};
+
+/**
  * Generic interface for a graph manager which can add, remove, and update nodes and edges in a graph. (supports async operations for bigger implementations)
  * @template Entity The type of the nodes in the graph.
  * @since v0.0.1
@@ -111,4 +121,11 @@ export interface IGraphManager<Entity extends IGraphEntityNode<number, Record<st
 	 * @returns {Promise<GraphStructure>} The structure of the node.
 	 */
 	getNodeStructure(node: Entity): Promise<GraphStructure>;
+
+	/**
+	 * Get hierarchical structure of an edges based on the root node.
+	 * @param {Entity} node The node to get the structure for.
+	 * @returns {GraphEdgeStructure | Promise<GraphEdgeStructure>} The structure of the edge.
+	 */
+	getEdgeStructure(node: Entity): GraphEdgeStructure | Promise<GraphEdgeStructure>;
 }

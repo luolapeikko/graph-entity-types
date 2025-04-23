@@ -1,5 +1,5 @@
 import {type EventEmitter} from 'events';
-import {type IGraphEntityNode} from './Node';
+import {type IGraphBaseEntityNode, type IGraphEntityNode} from './Node';
 
 export type GraphManagerEventMapping<Entity extends IGraphEntityNode<number, Record<string, unknown>>> = {
 	graphUpdate: []; // any update to the graph (node or edge)
@@ -14,13 +14,10 @@ export type GraphManagerEventMapping<Entity extends IGraphEntityNode<number, Rec
  * @template Entity The type of the node.
  * @since v0.0.2
  */
-export type GraphStructure<Entity extends IGraphEntityNode<number, Record<string, unknown>> = IGraphEntityNode<number, Record<string, unknown>>> = {
-	type: Entity['nodeType'];
-	id: string;
-	props: Awaited<ReturnType<Entity['getNodeProps']>>;
-	targets?: GraphStructure[];
-	sources?: GraphStructure[];
-};
+export type GraphStructure<Entity extends IGraphBaseEntityNode<number, Record<string, unknown>>> =
+	Entity extends IGraphBaseEntityNode<infer Type, infer Props>
+		? {type: Type; id: string; props: Props; targets?: GraphStructure<Entity>[]; sources?: GraphStructure<Entity>[]}
+		: never;
 
 /**
  * Graph link structure for a node id's in the graph.

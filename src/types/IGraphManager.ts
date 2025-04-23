@@ -11,12 +11,13 @@ export type GraphManagerEventMapping<Entity extends IGraphEntityNode<number, Rec
 
 /**
  * Hierarchy structure of a node in the graph.
+ * @template Entity The type of the node.
  * @since v0.0.2
  */
-export type GraphStructure = {
-	type: number;
+export type GraphStructure<Entity extends IGraphEntityNode<number, Record<string, unknown>> = IGraphEntityNode<number, Record<string, unknown>>> = {
+	type: Entity['nodeType'];
 	id: string;
-	props: Record<string, unknown>;
+	props: Awaited<ReturnType<Entity['getNodeProps']>>;
 	targets?: GraphStructure[];
 	sources?: GraphStructure[];
 };
@@ -120,7 +121,7 @@ export interface IGraphManager<Entity extends IGraphEntityNode<number, Record<st
 	 * @param {Entity} node The node to get the structure for.
 	 * @returns {Promise<GraphStructure>} The structure of the node.
 	 */
-	getNodeStructure(node: Entity): Promise<GraphStructure>;
+	getNodeStructure(node: Entity): Promise<GraphStructure<Entity>>;
 
 	/**
 	 * Get hierarchical structure of an edges based on the root node.

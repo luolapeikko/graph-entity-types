@@ -23,10 +23,10 @@ export type GraphStructure = {
 
 /**
  * Graph link structure for a node id's in the graph.
- * @since v0.0.3
+ * @since v0.0.4
  */
 export type GraphEdgeStructure = {
-	id: number;
+	id: string;
 	targets?: GraphEdgeStructure[];
 	sources?: GraphEdgeStructure[];
 };

@@ -2,12 +2,17 @@ import {type EventEmitter} from 'events';
 import {type GraphEdge} from './Edge';
 import {type IGraphBaseEntityNode, type IGraphEntityNode} from './Node';
 
+/**
+ * Graph manager event mapping.
+ * @template Entity The type of the nodes in the graph.
+ * @since v0.0.10
+ */
 export type GraphManagerEventMapping<Entity extends IGraphEntityNode<number, Record<string, unknown>>> = {
 	graphUpdate: []; // any update to the graph (node or edge)
 	nodeUpdate: [Entity];
 	nodeRemove: [Entity];
-	edgeAdd: [source: Entity, target: Entity];
-	edgeRemove: [source: Entity, target: Entity];
+	edgeAdd: [GraphEdge<Entity>];
+	edgeRemove: [GraphEdge<Entity>];
 };
 
 /**

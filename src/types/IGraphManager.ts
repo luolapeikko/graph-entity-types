@@ -1,4 +1,5 @@
 import {type EventEmitter} from 'events';
+import {type GraphEdge} from './Edge';
 import {type IGraphBaseEntityNode, type IGraphEntityNode} from './Node';
 
 export type GraphManagerEventMapping<Entity extends IGraphEntityNode<number, Record<string, unknown>>> = {
@@ -97,6 +98,12 @@ export interface IGraphManager<Entity extends IGraphEntityNode<number, Record<st
 	 * @returns {Iterable<Entity> | AsyncIterable<Entity>} list of all nodes
 	 */
 	getAllNodes(): Iterable<Entity> | AsyncIterable<Entity>;
+
+	/**
+	 * Get all edges in the graph.
+	 * @returns {Iterable<GraphEdge<Entity>> | AsyncIterable<GraphEdge<Entity>>} list of all edges
+	 */
+	getAllEdges(): Iterable<GraphEdge<Entity>> | AsyncIterable<GraphEdge<Entity>>;
 
 	/**
 	 * Get all nodes of a specific type.
